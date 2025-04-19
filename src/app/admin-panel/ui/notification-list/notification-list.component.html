@@ -1,0 +1,22 @@
+<ul>
+  @for(notification of notifications(); track notification.id){
+  <li data-testid="notification-item">
+    <a
+      routerLink="/notification/{{ notification.id }}"
+      data-testid="notification-link"
+    >
+      {{ notification.text }}
+    </a>
+    <span>{{ notification.icon }}</span>
+    <p>{{ notification.metaData }}</p>
+    <div>
+      <button>Edit</button>
+      <button>Delete</button>
+    </div>
+  </li>
+  } @empty {
+  <p data-testid="no-notifications">
+    Click the add button to create a notification.
+  </p>
+  }
+</ul>

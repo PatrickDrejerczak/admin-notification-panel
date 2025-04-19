@@ -1,0 +1,12 @@
+<header>
+  <h1>Notifications</h1>
+  <button>Add Notification</button>
+</header>
+
+<section>
+  <h2>Your Notifications</h2>
+
+  <app-notification-list
+    [notifications]="notificationService.notifications()"
+  />
+</section>
