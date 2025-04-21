@@ -1,12 +1,59 @@
-<header>
-  <h1>Notifications</h1>
-  <button>Add Notification</button>
+<header class="admin-header">
+  <h1 class="admin-title">Notifications</h1>
+  <span class="toolbar-spacer"></span>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="this.router.navigate(['./notifications'])"
+  >
+    <mat-icon>arrow_back</mat-icon>
+    Back to Notifications
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="notificationBeingEdited.set({})"
+  >
+    <mat-icon>add</mat-icon>
+    Add Notification
+  </button>
 </header>
 
-<section>
-  <h2>Your Notifications</h2>
+<section class="admin-section">
+  <h2 class="section-title">Created Notifications</h2>
 
-  <app-notification-list
-    [notifications]="notificationService.notifications()"
-  />
+  <div class="section-content">
+    <app-notification-list
+      [notifications]="notificationService.notifications()"
+      (delete)="
+        notificationService.delete$.next($event);
+        this.snackbarService.showSuccess('Notification successfully deleted.')
+      "
+      (edit)="notificationBeingEdited.set($event)"
+    />
+  </div>
 </section>
+
+<app-modal [isOpen]="!!notificationBeingEdited()">
+  <ng-template>
+    <app-notification-form
+      [title]="
+        notificationBeingEdited()?.id ? 'Edit Notification' : 'Add Notification'
+      "
+      (save)="
+        notificationBeingEdited()?.id
+          ? notificationService.edit$.next({
+              id: notificationBeingEdited()!.id!,
+              data: notificationFormComponent()!.notificationForm.getRawValue()
+            })
+          : notificationService.add$.next(
+              notificationFormComponent()!.notificationForm.getRawValue()
+            );
+        this.snackbarService.showSuccess('Notification successfully saved.')
+      "
+      (close)="notificationBeingEdited.set(null)"
+    ></app-notification-form>
+  </ng-template>
+</app-modal>

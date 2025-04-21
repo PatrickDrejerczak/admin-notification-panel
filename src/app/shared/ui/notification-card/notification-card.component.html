@@ -1,0 +1,41 @@
+<mat-card class="notification-card">
+  <mat-card-header>
+    <div class="header-content">
+      <span class="notification-icon" [class]="icon()">
+        <mat-icon>{{ icon() }}</mat-icon>
+      </span>
+      <mat-card-title class="notification-title">{{ text() }}</mat-card-title>
+    </div>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <p class="metadata">{{ metadata() }}</p>
+    @if(link()){
+    <a
+      href="{{ link() }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="notification-link"
+    >
+      {{ link() }}
+    </a>
+    }
+    <div class="dismiss-container">
+      <button
+        mat-button
+        class="dismiss-button"
+        [disabled]="disabled() === true ? disabled : null"
+        matTooltip="Will remove this notification from your notifications."
+        matTooltipPosition="above"
+        (click)="
+          notificationService.sent$.next({ id: id()!, sent: false });
+          this.snackbarService.showSuccess(
+            'Notification successfully dismissed.'
+          )
+        "
+      >
+        Dismiss
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,68 @@
+.notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 32px;
+  
+    .notifications-title {
+      margin: 0;
+      font-size: 2.5em;
+      color: #3f51b5;
+    }
+  
+    button {
+      font-size: 1em;
+      margin-left: 16px;
+    }
+  
+    mat-icon {
+      margin-right: 8px;
+    }
+  
+    .toolbar-spacer {
+      flex: 1 1 auto;
+    }
+  }
+  
+  .notifications-section {
+    padding: 24px;
+  
+    .section-title {
+      font-size: 2em;
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 8px;
+    }
+  
+    .section-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 1.1em;
+      color: #777;
+      width: 100%;
+  
+      mat-icon {
+        font-size: 24px;
+        margin-right: 16px;
+      }
+    }
+
+    .no-notifications {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+  
+    h3 {
+      margin-top: 16px;
+      margin-bottom: 12px;
+      color: #555;
+    }
+  }

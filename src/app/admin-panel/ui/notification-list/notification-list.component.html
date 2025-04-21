@@ -1,22 +1,60 @@
-<ul>
+<ul class="notification-list">
   @for(notification of notifications(); track notification.id){
-  <li data-testid="notification-item">
-    <a
-      routerLink="/notification/{{ notification.id }}"
-      data-testid="notification-link"
-    >
-      {{ notification.text }}
-    </a>
-    <span>{{ notification.icon }}</span>
-    <p>{{ notification.metaData }}</p>
-    <div>
-      <button>Edit</button>
-      <button>Delete</button>
+  <li class="notification-item" data-testid="notification-item">
+    <span class="notification-icon" [class]="notification.icon">
+      <mat-icon>{{ notification.icon }}</mat-icon>
+    </span>
+    <div class="notification-details">
+      <p class="notification-link" data-testid="notification-link">
+        {{ notification.text }}
+      </p>
+      <p class="notification-metadata">{{ notification.metaData }}</p>
+      @if (notification.link) {
+      <a [href]="notification.link" target="_blank" class="notification-link">
+        {{ notification.link }}
+      </a>
+      }
+    </div>
+    <div class="notification-actions">
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Edit this notification."
+        matTooltipPosition="above"
+        (click)="edit.emit(notification)"
+        data-testid="edit-notification"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="primary"
+        matTooltip="Send this notification to all users."
+        matTooltipPosition="above"
+        (click)="
+          notificationService.sent$.next({ id: notification.id, sent: true });
+          this.snackbarService.showSuccess('Notification successfully sent.')
+        "
+        data-testid="send-notification"
+      >
+        <mat-icon>mail</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        matTooltip="Delete this notification."
+        matTooltipPosition="above"
+        (click)="delete.emit(notification.id)"
+        data-testid="delete-notification"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
   </li>
   } @empty {
-  <p data-testid="no-notifications">
-    Click the add button to create a notification.
-  </p>
+  <li class="empty-notifications" data-testid="no-notifications">
+    <mat-icon color="info">info_outline</mat-icon>
+    <p>Click the add button to create a notification.</p>
+  </li>
   }
 </ul>

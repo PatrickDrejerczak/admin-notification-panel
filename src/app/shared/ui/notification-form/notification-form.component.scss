@@ -1,0 +1,117 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 16px;
+}
+
+.modal-header {
+    h2 {
+      margin: 0;
+      font-size: 1.5em;
+      color: #333;
+    }
+  
+    .close-button {
+      background: none;
+      border: none;
+      color: #777;
+      font-size: 1.2em;
+      cursor: pointer;
+      outline: none;
+  
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+  
+  .modal-body {
+    padding: 16px;
+  }
+  
+  .notification-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  
+    .form-group {
+      display: flex;
+      flex-direction: column;
+  
+      label {
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+      }
+  
+      .form-control {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1em;
+        outline: none;
+  
+        &:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+      }
+  
+      textarea.form-control {
+        resize: vertical;
+      }
+  
+      .error-message {
+        margin-top: 5px;
+        color: #dc3545;
+        font-size: 0.9em;
+      }
+    }
+  
+    .save-button {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      outline: none;
+  
+      &:hover {
+        background-color: #218838;
+      }
+  
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+      }
+    }
+  }
+
+  .required-note {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 10px;
+  }
+
+  .preview-header {
+    h2 {
+      margin: 0;
+      font-size: 1.5em;
+      color: #5e8feb;
+    }
+  }
+
+  .preview-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .preview-info-icon {
+    font-size: 16px;
+    color: grey
+  }

@@ -4,6 +4,7 @@ export interface Notification {
   text: string;
   metaData: string;
   link?: string;
+  sent?: boolean;
 }
 
 export type AddNotification = Omit<Notification, 'id'>;
@@ -12,3 +13,7 @@ export type EditNotification = {
   data: AddNotification;
 };
 export type DeleteNotification = Notification['id'];
+export type NotificationSentStatus = {
+  id: Notification['id'];
+  sent: boolean;
+};

@@ -21,7 +21,13 @@ export class ModalComponent {
       const isOpen = this.isOpen();
 
       if (isOpen) {
-        this.dialog.open(this.template(), { panelClass: 'dialog-container' });
+        // added so that the active element loses focus and doesnt block any functionality
+        const activeElement = document.activeElement as HTMLElement;
+        activeElement.blur();
+        this.dialog.open(this.template(), {
+          panelClass: 'dialog-container',
+          disableClose: true,
+        });
       } else {
         this.dialog.closeAll();
       }

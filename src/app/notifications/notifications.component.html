@@ -1,0 +1,51 @@
+<header class="notifications-header">
+  <h1 class="notifications-title">Welcome {{ this.userRole() }}</h1>
+  <span class="toolbar-spacer"></span>
+
+  @if (this.userRole() === 'admin') {
+  <button mat-raised-button color="accent" routerLink="/admin">
+    <mat-icon>settings</mat-icon>
+    Admin Panel
+  </button>
+  }
+
+  <button mat-raised-button color="warn" (click)="handleLogout()">
+    <mat-icon>logout</mat-icon>
+    Logout
+  </button>
+</header>
+
+<section class="notifications-section">
+  <h2 class="section-title">Notifications</h2>
+
+  <div class="section-content">
+    @if (this.userRole() === 'admin') {
+    <h3>
+      <div class="no-notifications">
+        <mat-icon color="primary">notifications_off</mat-icon>
+        <p>No new notifications received.</p>
+      </div>
+    </h3>
+    } @if (this.userRole() === 'user') {
+    <h3>
+      @switch(this.userNotifications().length){ @case (0){
+      <div class="no-notifications">
+        <mat-icon color="primary">notifications_off</mat-icon>
+        <p>No new notifications received.</p>
+      </div>
+      } @case (1) { You have
+      {{ this.userNotifications().length }} new notification: } @default { You
+      have {{ this.userNotifications().length }} new notifications: } }
+    </h3>
+    @for (userNotification of userNotifications(); track userNotification.id) {
+    <app-notification-card
+      [id]="userNotification.id"
+      [icon]="userNotification.icon"
+      [text]="userNotification.text"
+      [metadata]="userNotification.metaData"
+      [link]="userNotification.link!"
+      [disabled]="false"
+    ></app-notification-card>
+    } }
+  </div>
+</section>

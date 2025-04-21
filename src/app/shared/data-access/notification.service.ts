@@ -1,9 +1,10 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import {
   AddNotification,
-  DeleteNotification,
+  NotificationSentStatus,
   EditNotification,
   Notification,
+  DeleteNotification,
 } from '../interfaces/notification';
 import { StorageService } from './storage.service';
 import { Subject } from 'rxjs';
@@ -31,6 +32,11 @@ export class NotificationService {
 
   //selectors
   notifications = computed(() => this.state().notifications);
+  userNotifications = computed(() =>
+    this.state().notifications.filter(
+      (notification) => notification.sent === true
+    )
+  );
   loaded = computed(() => this.state().loaded);
   error = computed(() => this.state().error);
 
@@ -39,6 +45,7 @@ export class NotificationService {
   add$ = new Subject<AddNotification>();
   edit$ = new Subject<EditNotification>();
   delete$ = new Subject<DeleteNotification>();
+  sent$ = new Subject<NotificationSentStatus>();
 
   constructor() {
     // reducers
@@ -79,7 +86,18 @@ export class NotificationService {
         ...state,
         notifications: state.notifications.map((notification) =>
           notification.id === update.id
-            ? { ...notification, ...update }
+            ? { ...notification, ...update.data }
+            : notification
+        ),
+      }))
+    );
+
+    this.sent$.pipe(takeUntilDestroyed()).subscribe((update) =>
+      this.state.update((state) => ({
+        ...state,
+        notifications: state.notifications.map((notification) =>
+          notification.id === update.id
+            ? { ...notification, sent: update.sent }
             : notification
         ),
       }))

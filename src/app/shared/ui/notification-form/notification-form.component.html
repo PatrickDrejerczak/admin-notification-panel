@@ -1,0 +1,115 @@
+<header class="modal-header">
+  <h2>{{ title() }}</h2>
+  <button class="close-button" (click)="close.emit()">
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+<section class="modal-body">
+  <form
+    [formGroup]="notificationForm"
+    (ngSubmit)="onSubmit()"
+    class="notification-form"
+  >
+    <div class="form-group">
+      <label for="icon">Priority*</label>
+      <select formControlName="icon" id="icon" class="form-control">
+        <option value="info">Low <mat-icon></mat-icon></option>
+        <option value="error_outline">Medium</option>
+        <option value="warning">High</option>
+      </select>
+      @if(notificationForm.get('icon')?.invalid &&
+      notificationForm.get('icon')?.touched){
+      <div class="error-message">
+        <small>Priority is required.</small>
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="text">Title*</label>
+      <input
+        type="text"
+        id="text"
+        formControlName="text"
+        class="form-control"
+      />
+      @if(notificationForm.get('text')?.invalid &&
+      notificationForm.get('text')?.touched){
+      <div class="error-message">
+        @if(notificationForm.get('text')?.errors?.['required']) {
+        <small>Text is required.</small>
+        } @else if(notificationForm.get('text')?.errors?.['minlength']) {
+        <small>Minimum 3 characters.</small>
+        } @else if(notificationForm.get('text')?.errors?.['maxlength']){
+        <small>Maximum 30 characters.</small>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="metaData">Description*</label>
+      <input
+        type="text"
+        id="metaData"
+        formControlName="metaData"
+        class="form-control"
+      />
+      @if(notificationForm.get('metaData')?.invalid &&
+      notificationForm.get('metaData')?.touched) {
+      <div class="error-message">
+        @if(notificationForm.get('metaData')?.errors?.['required']){
+        <small>MetaData is required.</small>
+        } @else if(notificationForm.get('metaData')?.errors?.['minlength']){
+        <small>Minimum 3 characters.</small>
+        } @else if(notificationForm.get('metaData')?.errors?.['maxlength']){
+        <small>Maximum 40 characters.</small>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="link">Link</label>
+      <input type="url" id="link" formControlName="link" class="form-control" />
+      @if(notificationForm.get('link')?.invalid &&
+      notificationForm.get('link')?.touched &&
+      notificationForm.get('link')?.errors?.['pattern']) {
+      <div class="error-message">
+        <small>Please enter a valid URL including https://.</small>
+      </div>
+      }
+    </div>
+
+    <button
+      type="submit"
+      data-testid="save-notification=button"
+      class="save-button"
+    >
+      Save
+    </button>
+  </form>
+  <p class="required-note">* fields are required</p>
+</section>
+<section>
+  <header class="preview-header">
+    <h2>
+      Preview
+      <mat-icon
+        class="preview-info-icon"
+        matTooltip="Shows a preview of how the notification will look for the user. Updates with form inputs."
+        matTooltipPosition="above"
+        >info</mat-icon
+      >
+    </h2>
+  </header>
+  <div class="preview-card">
+    <app-notification-card
+      [icon]="notificationForm.controls.icon.value"
+      [text]="notificationForm.controls.text.value"
+      [metadata]="notificationForm.controls.metaData.value"
+      [link]="notificationForm.controls.link.value"
+      [disabled]="true"
+    ></app-notification-card>
+  </div>
+</section>
