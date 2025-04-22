@@ -21,7 +21,7 @@ export class ModalComponent {
       const isOpen = this.isOpen();
 
       if (isOpen) {
-        // added so that the active element loses focus and doesnt block any functionality
+        // added so that the active element loses focus and doesnt block any aria functionality
         const activeElement = document.activeElement as HTMLElement;
         activeElement.blur();
         this.dialog.open(this.template(), {

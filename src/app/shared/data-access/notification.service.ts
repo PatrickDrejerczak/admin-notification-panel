@@ -7,7 +7,7 @@ import {
   DeleteNotification,
 } from '../interfaces/notification';
 import { StorageService } from './storage.service';
-import { Subject, catchError, of } from 'rxjs'; // Import catchError and of
+import { Subject, catchError, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { v4 as uuidv4 } from 'uuid';
 
