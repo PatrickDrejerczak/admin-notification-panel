@@ -7,7 +7,7 @@ import {
   DeleteNotification,
 } from '../interfaces/notification';
 import { StorageService } from './storage.service';
-import { Subject } from 'rxjs';
+import { Subject, catchError, of } from 'rxjs'; // Import catchError and of
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -56,7 +56,12 @@ export class NotificationService {
           notifications,
           loaded: true,
         })),
-      error: (err) => this.state.update((state) => ({ ...state, error: err })),
+      error: (err) =>
+        this.state.update((state) => ({
+          ...state,
+          error: 'Failed to load notifications:',
+          err,
+        })),
     });
 
     this.add$.pipe(takeUntilDestroyed()).subscribe((notification) =>
@@ -106,7 +111,19 @@ export class NotificationService {
     // effects
     effect(() => {
       if (this.loaded()) {
-        this.storageService.saveNotifications(this.notifications());
+        this.storageService
+          .saveNotifications(this.notifications())
+          .pipe(
+            catchError((error) => {
+              console.error('Error saving notifications in effect:', error);
+              this.state.update((state) => ({
+                ...state,
+                error: 'Failed to save notifications.',
+              }));
+              return of(null);
+            })
+          )
+          .subscribe();
       }
     });
   }
