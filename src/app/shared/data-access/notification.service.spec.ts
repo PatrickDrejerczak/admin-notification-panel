@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { StorageService } from './storage.service';
 import { NotificationService } from './notification.service';
 
@@ -20,7 +20,7 @@ describe('NotificationService', () => {
             loadNotifications: jest
               .fn()
               .mockReturnValue(loadNotificationsSubject),
-            saveNotifications: jest.fn(),
+            saveNotifications: jest.fn().mockReturnValue(of(null)),
           },
         },
       ],
@@ -130,7 +130,7 @@ describe('NotificationService', () => {
 
     it('should set the error state if load fails', () => {
       expect(service.error()).toEqual(null);
-      const testError = 'err';
+      const testError = 'Failed to load notifications:';
       loadNotificationsSubject.error(testError);
       expect(service.error()).toEqual(testError);
     });
