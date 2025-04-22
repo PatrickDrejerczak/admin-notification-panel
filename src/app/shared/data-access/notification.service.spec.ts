@@ -73,7 +73,6 @@ describe('NotificationService', () => {
 
   describe('source: delete$', () => {
     beforeEach(() => {
-      // add some test data
       service.add$.next({ icon: 'info', text: 'first', metaData: 'first' });
       service.add$.next({ icon: 'info', text: 'second', metaData: 'second' });
       service.add$.next({ icon: 'info', text: 'third', metaData: 'third' });
@@ -139,7 +138,6 @@ describe('NotificationService', () => {
 
   describe('effect: notifications()', () => {
     it('should call saveNotifications method with notifications when notifications() changes', () => {
-      //   const { flushEffects } = setUp();
       loadNotificationsSubject.next([]);
       service.add$.next({ icon: 'info', text: 'test', metaData: 'test' });
       TestBed.flushEffects();
@@ -149,7 +147,6 @@ describe('NotificationService', () => {
     });
 
     it('should NOT call saveNotifications if the loaded flag is false', () => {
-      //   const { flushEffects } = setUp();
       service.add$.next({ icon: 'info', text: 'test', metaData: 'test' });
       TestBed.flushEffects();
       expect(storageService.saveNotifications).not.toHaveBeenCalledWith();

@@ -32,6 +32,10 @@
         this.snackbarService.showSuccess('Notification successfully deleted.')
       "
       (edit)="notificationBeingEdited.set($event)"
+      (sent)="
+        notificationService.sent$.next($event);
+        this.snackbarService.showSuccess('Notification successfully sent.')
+      "
     />
   </div>
 </section>

@@ -39,6 +39,10 @@
     </h3>
     @for (userNotification of userNotifications(); track userNotification.id) {
     <app-notification-card
+      (dismissed)="
+        notificationService.sent$.next($event);
+        this.snackbarService.showSuccess('Notification successfully dismissed.')
+      "
       [id]="userNotification.id"
       [icon]="userNotification.icon"
       [text]="userNotification.text"

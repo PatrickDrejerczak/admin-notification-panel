@@ -31,10 +31,7 @@
         color="primary"
         matTooltip="Send this notification to all users."
         matTooltipPosition="above"
-        (click)="
-          notificationService.sent$.next({ id: notification.id, sent: true });
-          this.snackbarService.showSuccess('Notification successfully sent.')
-        "
+        (click)="sent.emit({ id: notification.id, sent: true })"
         data-testid="send-notification"
       >
         <mat-icon>mail</mat-icon>

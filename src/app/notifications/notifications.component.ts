@@ -6,6 +6,7 @@ import { NotificationCardComponent } from '../shared/ui/notification-card/notifi
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { SnackbarService } from '../shared/data-access/snackbar.service';
 
 @Component({
   selector: 'app-notifications',
@@ -20,8 +21,9 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './notifications.component.scss',
 })
 export default class NotificationsComponent implements OnInit {
-  storageService = inject(StorageService);
   router = inject(Router);
+  storageService = inject(StorageService);
+  snackbarService = inject(SnackbarService);
   notificationService = inject(NotificationService);
   userRole = signal<string>('');
   userNotifications = computed(() =>

@@ -27,12 +27,7 @@
         [disabled]="disabled() === true ? disabled : null"
         matTooltip="Will remove this notification from your notifications."
         matTooltipPosition="above"
-        (click)="
-          notificationService.sent$.next({ id: id()!, sent: false });
-          this.snackbarService.showSuccess(
-            'Notification successfully dismissed.'
-          )
-        "
+        (click)="dismissed.emit({ id: id()!, sent: false })"
       >
         Dismiss
       </button>
