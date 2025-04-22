@@ -13,10 +13,9 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
-  standalone: true,
   selector: 'app-modal',
   template: ` <ng-container #container></ng-container> `,
 })
@@ -46,7 +45,6 @@ export class MockModalComponent implements OnDestroy, OnChanges {
 }
 
 @Component({
-  standalone: true,
   template: `
     <app-modal [isOpen]="isOpen">
       <ng-template #testTemplate>
@@ -103,7 +101,10 @@ describe('ModalComponent', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
-      expect(dialog.open).toHaveBeenCalledWith(hostComponent.templateRef);
+      expect(dialog.open).toHaveBeenCalledWith(hostComponent.templateRef, {
+        panelClass: 'dialog-container',
+        disableClose: true,
+      } as MatDialogConfig);
     });
 
     it('should call closeAll method of dialog when changed to false', () => {
