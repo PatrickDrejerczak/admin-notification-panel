@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { StorageService } from './storage.service';
-import { Component, Injector, runInInjectionContext } from '@angular/core';
 import { NotificationService } from './notification.service';
 
 describe('NotificationService', () => {
@@ -72,7 +71,7 @@ describe('NotificationService', () => {
     });
   });
 
-  describe('source: remove$', () => {
+  describe('source: delete$', () => {
     beforeEach(() => {
       // add some test data
       service.add$.next({ icon: 'info', text: 'first', metaData: 'first' });
@@ -95,6 +94,22 @@ describe('NotificationService', () => {
       const prevLength = service.notifications().length;
       service.delete$.next(testNotification.id);
       expect(service.notifications().length).toEqual(prevLength - 1);
+    });
+  });
+
+  describe('source: sent$', () => {
+    let notSent = { icon: 'info', text: 'test', metaData: 'test', sent: false };
+    let sent = { icon: 'info', text: 'test', metaData: 'test', sent: true };
+
+    beforeEach(() => {
+      service.add$.next(notSent);
+      const addedNotification = service.notifications()[0];
+      service.sent$.next({ id: addedNotification.id, sent: true });
+    });
+
+    it('should change the sent flag to true', () => {
+      const notification = service.notifications()[0];
+      expect(notification).toEqual({ id: notification.id, ...sent });
     });
   });
 

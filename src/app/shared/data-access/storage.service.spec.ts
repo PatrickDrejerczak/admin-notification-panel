@@ -20,7 +20,7 @@ describe('StorageService', () => {
   });
 
   describe('loadNotifications()', () => {
-    it('should return an observable of whatever data is stored on the "checklists" key', () => {
+    it('should return an observable of whatever data is stored on the "notifications" key', () => {
       const testData = [{}, {}];
       const getItem = jest
         .spyOn(Storage.prototype, 'getItem')
