@@ -36,6 +36,19 @@ header {
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    @media(max-height: 870px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .form-group {
+        flex: 0 0 calc(50% - 8px);
+      }
+  
+      .save-button {
+        flex-basis: 100%;
+      }
+    }
   
     .form-group {
       display: flex;
