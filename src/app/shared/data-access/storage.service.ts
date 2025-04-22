@@ -40,13 +40,6 @@ export class StorageService {
     );
   }
 
-  loadUserNotifications() {
-    const userNotifications = this.localStorage.getItem('userNotifications');
-    return of(
-      userNotifications ? (JSON.parse(userNotifications) as Notification[]) : []
-    );
-  }
-
   loadUserRole() {
     const userRole = this.sessionStorage.getItem('userRole');
     return of(userRole ? userRole : '');
@@ -54,13 +47,6 @@ export class StorageService {
 
   saveNotifications(notifications: Notification[]) {
     this.localStorage.setItem('notifications', JSON.stringify(notifications));
-  }
-
-  saveUserNotifications(userNotifications: Notification[]) {
-    this.localStorage.setItem(
-      'userNotifications',
-      JSON.stringify(userNotifications)
-    );
   }
 
   saveUserRole(userRole: string) {
